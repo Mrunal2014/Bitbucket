@@ -1,0 +1,16 @@
+build:
+    container: base/ubuntu/trusty/amd64
+    project_setup:
+        before:
+            - apt-get update
+            - echo 'y' | apt-get upgrade
+            - echo 'y' | apt-get install php5 mysql
+            -
+                command: useradd -m scrutinizer
+                not_if: test -e /home/scrutinizer
+
+    deployment:
+        -
+            container:
+                user: scrutinizer
+                home: /home/scrutinizer
